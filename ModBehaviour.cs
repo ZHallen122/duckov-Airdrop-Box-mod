@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 // ⚠️ 修改这个命名空间为你的 Mod 名称（必须与 info.ini 中的 name 字段一致）
-namespace YourModName
+namespace AirdropBox
 {
     /// <summary>
     /// Mod 主类
@@ -16,7 +16,7 @@ namespace YourModName
         /// </summary>
         void Awake()
         {
-            Debug.Log("[YourModName] Mod Loaded!");  // 修改日志前缀
+            Debug.Log("[AirdropBox] Mod Loaded!");  // 修改日志前缀
 
             // 在这里进行初始化操作
             // 例如：加载配置、注册事件等
