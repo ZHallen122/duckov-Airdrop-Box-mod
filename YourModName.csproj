@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>YourModName</AssemblyName>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- 修改这个路径为你的游戏安装路径 -->
+    <DuckovPath>/Users/jacksonc/Library/Application Support/Steam/steamapps/common/Escape from Duckov/Duckov.app/Contents/Resources/Data</DuckovPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 游戏核心 DLL 引用 -->
+    <Reference Include="$(DuckovPath)/Managed/TeamSoda.*.dll" />
+    <Reference Include="$(DuckovPath)/Managed/ItemStatsSystem.dll" />
+    <Reference Include="$(DuckovPath)/Managed/UniTask.dll" />
+    <Reference Include="$(DuckovPath)/Managed/NodeCanvas.dll" />
+
+    <!-- Unity DLL 引用 -->
+    <Reference Include="$(DuckovPath)/Managed/UnityEngine.dll" />
+    <Reference Include="$(DuckovPath)/Managed/UnityEngine.*.dll" />
+  </ItemGroup>
+
+</Project>
