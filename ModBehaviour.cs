@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using ItemStatsSystem;
 
 // ⚠️ 修改这个命名空间为你的 Mod 名称（必须与 info.ini 中的 name 字段一致）
 namespace AirdropBox
@@ -9,7 +10,10 @@ namespace AirdropBox
     /// 继承自 Duckov.Modding.ModBehaviour
     /// </summary>
     public class ModBehaviour : Duckov.Modding.ModBehaviour
-    {
+    {   
+        /// </summary>
+        private bool hasSpawnedBox = false;
+
         /// <summary>
         /// Mod 初始化
         /// 在 Mod 加载时调用一次
@@ -28,13 +32,62 @@ namespace AirdropBox
         /// </summary>
         void Update()
         {
-            // 示例：按 H 键显示消息
-            if (Input.GetKeyDown(KeyCode.H))
+            // 检查游戏是否开始且玩家存在
+            if (!hasSpawnedBox && LevelManager.Instance != null && LevelManager.Instance.MainCharacter != null)
             {
-                Debug.Log("[YourModName] Hello, World!");
+                SpawnEmptyLootbox();
+                hasSpawnedBox = true;
             }
 
-            // 在这里添加你的逻辑
+            // 示例：按 F8 键手动生成箱子
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                SpawnEmptyLootbox();
+            }
+        }
+
+        /// <summary>
+        /// 在玩家附近生成空箱子
+        /// </summary>
+        private void SpawnEmptyLootbox()
+        {
+            CharacterMainControl player = LevelManager.Instance?.MainCharacter;
+            if (player == null)
+            {
+                Debug.LogWarning("[AirdropBox] 玩家不存在，无法生成箱子");
+                return;
+            }
+
+            // 在玩家前方2米处生成
+            Vector3 spawnPos = player.transform.position + player.transform.forward * 2f;
+
+            // 创建一个容器物品作为箱子
+            Item containerItem = new GameObject("EmptyAirdropBox").AddComponent<Item>();
+            Inventory inventory = containerItem.gameObject.AddComponent<Inventory>();
+            
+            // 设置箱子容量为20格（空箱子）
+            inventory.SetCapacity(20);
+
+            // 在地图上创建箱子
+            InteractableLootbox lootbox = InteractableLootbox.CreateFromItem(
+                item: containerItem,
+                position: spawnPos,
+                rotation: Quaternion.identity,
+                moveToMainScene: true
+            );
+
+            if (lootbox != null)
+            {
+                Debug.Log($"[AirdropBox] 空箱子已生成在玩家附近: {spawnPos}");
+                player.PopText("空投箱已生成！", 2f);
+            }
+            else
+            {
+                Debug.LogError("[AirdropBox] 箱子生成失败");
+            }
+
+            // 清理临时容器物品
+            GameObject.Destroy(containerItem.gameObject);
         }
 
         /// <summary>
@@ -43,7 +96,7 @@ namespace AirdropBox
         /// </summary>
         void OnDestroy()
         {
-            Debug.Log("[YourModName] Mod Unloaded");
+            Debug.Log("[AirdropBox] Mod Unloaded");
 
             // 在这里清理资源
         }
