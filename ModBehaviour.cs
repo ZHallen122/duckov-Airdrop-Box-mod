@@ -49,10 +49,10 @@ namespace AirdropBox
             }
 
             // 按 F9 键切换箱子样式
-            if (Input.GetKeyDown(KeyCode.F9))
-            {
-                CycleBoxStyle();
-            }
+            // if (Input.GetKeyDown(KeyCode.F9))
+            // {
+            //     CycleBoxStyle();
+            // }
 
             // 按 F7 键列出所有可用样式
             // if (Input.GetKeyDown(KeyCode.F7))
