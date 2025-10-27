@@ -55,10 +55,10 @@ namespace AirdropBox
             }
 
             // 按 F7 键列出所有可用样式
-            if (Input.GetKeyDown(KeyCode.F7))
-            {
-                ListAllBoxStyles();
-            }
+            // if (Input.GetKeyDown(KeyCode.F7))
+            // {
+            //     ListAllBoxStyles();
+            // }
         }
 
         /// <summary>
